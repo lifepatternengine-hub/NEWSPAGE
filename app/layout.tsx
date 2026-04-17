@@ -19,6 +19,18 @@ export const metadata: Metadata = {
   title: "The Pattern — Midlife Professional Reinvention",
   description:
     "Honest, evidence-based journalism for professionals navigating the second half of their working lives. Mental health, career transition, identity, and purpose.",
+  metadataBase: new URL("https://the-pattern.xyz"),
+  openGraph: {
+    siteName: "The Pattern",
+    type: "website",
+    url: "https://the-pattern.xyz",
+    title: "The Pattern — Midlife Professional Reinvention",
+    description:
+      "Honest, evidence-based journalism for professionals navigating the second half of their working lives.",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({

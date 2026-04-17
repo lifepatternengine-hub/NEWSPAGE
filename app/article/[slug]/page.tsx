@@ -15,10 +15,25 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article) return {};
+  const url = `https://the-pattern.xyz/article/${article.slug}`;
   return {
     title: `${article.title} — The Pattern`,
     description: article.subheadline,
-    openGraph: { images: [article.image] },
+    alternates: { canonical: url },
+    openGraph: {
+      title: article.title,
+      description: article.subheadline,
+      url,
+      type: "article",
+      publishedTime: article.date,
+      images: [{ url: article.image, width: 1200, height: 630, alt: article.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.subheadline,
+      images: [article.image],
+    },
   };
 }
 
