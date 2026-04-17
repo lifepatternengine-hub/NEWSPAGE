@@ -63,7 +63,9 @@ export default async function ArticlePage({
           <p className="text-lg text-[#5a5050] leading-relaxed mb-6">
             {article.subheadline}
           </p>
-          <p className="text-xs text-[#9a8e8e] tracking-wide">{formattedDate}</p>
+          <p className="text-xs text-[#9a8e8e] tracking-wide">
+            {formattedDate} · {article.readingTime} min read
+          </p>
         </div>
       </div>
 

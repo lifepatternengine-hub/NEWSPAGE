@@ -14,6 +14,12 @@ export interface ArticleMeta {
   date: string;
   image: string;
   draft: boolean;
+  readingTime: number; // minutes
+}
+
+function calcReadingTime(text: string): number {
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
 }
 
 export interface Article extends ArticleMeta {
@@ -39,7 +45,7 @@ export function getAllArticles(): ArticleMeta[] {
     .map((slug) => {
       const filePath = path.join(ARTICLES_DIR, `${slug}.md`);
       const raw = fs.readFileSync(filePath, "utf-8");
-      const { data } = matter(raw);
+      const { data, content } = matter(raw);
       return {
         slug,
         title: data.title ?? slug,
@@ -48,6 +54,7 @@ export function getAllArticles(): ArticleMeta[] {
         date: data.date ?? "",
         image: data.image ?? `https://picsum.photos/seed/${slug}/1200/630`,
         draft: data.draft ?? false,
+        readingTime: calcReadingTime(content),
       } as ArticleMeta;
     })
     .filter((a) => !a.draft)
@@ -77,6 +84,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     date: data.date ?? "",
     image: data.image ?? `https://picsum.photos/seed/${slug}/1200/630`,
     draft: data.draft ?? false,
+    readingTime: calcReadingTime(content),
     contentHtml,
   };
 }
