@@ -17,3 +17,61 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter), system-ui, sans-serif;
 }
+
+/* Article body prose */
+.prose-article {
+  color: #2a1f1f;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+.prose-article h1 {
+  font-family: var(--font-dm-serif);
+  font-size: 2.25rem;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+  color: #160b1d;
+}
+.prose-article h2 {
+  font-family: var(--font-dm-serif);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin: 2.5rem 0 0.75rem;
+  color: #160b1d;
+}
+.prose-article h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 2rem 0 0.5rem;
+  color: #160b1d;
+}
+.prose-article p {
+  margin: 0 0 1.5rem;
+}
+.prose-article blockquote {
+  border-left: 3px solid #C8512A;
+  margin: 2rem 0;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  font-family: var(--font-dm-serif);
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #160b1d;
+}
+.prose-article blockquote p {
+  margin: 0;
+}
+.prose-article ul,
+.prose-article ol {
+  margin: 0 0 1.5rem 1.5rem;
+}
+.prose-article li {
+  margin-bottom: 0.4rem;
+}
+.prose-article a {
+  color: #C8512A;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-article strong {
+  font-weight: 600;
+  color: #160b1d;
+}

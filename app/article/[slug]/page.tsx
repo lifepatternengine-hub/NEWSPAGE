@@ -1,0 +1,115 @@
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import { getArticleBySlug, getAllArticleSlugs } from "@/lib/articles";
+
+export async function generateStaticParams() {
+  return getAllArticleSlugs().map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug);
+  if (!article) return {};
+  return {
+    title: `${article.title} — The Pattern`,
+    description: article.subheadline,
+    openGraph: { images: [article.image] },
+  };
+}
+
+const CATEGORY_LABELS: Record<string, string> = {
+  burnout: "Burnout & Disruption",
+  reinvention: "Reinvention Stories",
+  research: "Research & Data",
+  policy: "Policy & Legislation",
+  "case-study": "Case Studies",
+};
+
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug);
+  if (!article) notFound();
+
+  const label = CATEGORY_LABELS[article.category] ?? article.category;
+  const formattedDate = new Date(article.date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return (
+    <main className="bg-[#F0EDE6] min-h-screen">
+      {/* Header */}
+      <div className="border-b border-[#E2DDD5]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-8">
+          <Link
+            href={`/category/${article.category}`}
+            className="text-[10px] tracking-widest uppercase text-[#C8512A] font-medium hover:opacity-75 transition-opacity"
+          >
+            {label}
+          </Link>
+          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight mt-4 mb-4 text-[#160b1d]">
+            {article.title}
+          </h1>
+          <p className="text-lg text-[#5a5050] leading-relaxed mb-6">
+            {article.subheadline}
+          </p>
+          <p className="text-xs text-[#9a8e8e] tracking-wide">{formattedDate}</p>
+        </div>
+      </div>
+
+      {/* Hero image */}
+      <div className="relative w-full aspect-[21/9] max-h-[480px] overflow-hidden">
+        <Image
+          src={article.image}
+          alt={article.title}
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
+
+      {/* Body */}
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+        <div
+          className="prose-article"
+          dangerouslySetInnerHTML={{ __html: article.contentHtml }}
+        />
+
+        {/* LPE CTA */}
+        <div className="mt-16 border-t border-[#E2DDD5] pt-12">
+          <div className="bg-[#0e0a17] text-white px-8 py-10 text-center">
+            <p className="text-[10px] tracking-[0.25em] uppercase text-white/40 mb-3">
+              Life Pattern Engine
+            </p>
+            <h2 className="font-serif text-2xl md:text-3xl mb-4">
+              Which of the 15 patterns are you carrying?
+            </h2>
+            <p className="text-white/60 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
+              28 questions. Free. Built for high-achieving professionals
+              navigating the second half of their working lives.
+            </p>
+            <a
+              href="https://life-pattern-engine.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-white text-[#0e0a17] px-8 py-3 text-xs tracking-widest uppercase font-medium hover:bg-white/90 transition-colors"
+            >
+              Take the Free Diagnostic →
+            </a>
+            <p className="mt-3 text-[11px] text-white/30">No email required. Takes 7 minutes.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
