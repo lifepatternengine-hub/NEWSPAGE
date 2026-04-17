@@ -1,8 +1,15 @@
 import Link from "next/link";
 import ArticleCard from "./ArticleCard";
-import { heroArticles, mostRead } from "@/lib/mock-data";
+import { ArticleMeta } from "@/lib/articles";
 
-export default function HeroSection() {
+interface Props {
+  articles: ArticleMeta[];
+}
+
+export default function HeroSection({ articles }: Props) {
+  const hero = articles.slice(0, 6);
+  const mostRead = articles.slice(0, 5);
+
   return (
     <section className="bg-[#F0EDE6] border-b border-[#E2DDD5]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
@@ -11,8 +18,8 @@ export default function HeroSection() {
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
           <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
-            {heroArticles.map((article) => (
-              <ArticleCard key={article.id} article={article} variant="hero" />
+            {hero.map((article) => (
+              <ArticleCard key={article.slug} article={article} variant="hero" />
             ))}
           </div>
 
@@ -22,7 +29,7 @@ export default function HeroSection() {
             </h3>
             <ol className="flex flex-col gap-5">
               {mostRead.map((article, i) => (
-                <li key={article.id} className="flex gap-3 items-start">
+                <li key={article.slug} className="flex gap-3 items-start">
                   <span className="text-2xl font-serif text-[#DDD8CF] leading-none select-none shrink-0 w-7">
                     {String(i + 1).padStart(2, "0")}
                   </span>

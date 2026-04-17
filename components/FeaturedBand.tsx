@@ -1,7 +1,14 @@
 import ArticleCard from "./ArticleCard";
-import { featuredArticles } from "@/lib/mock-data";
+import { ArticleMeta } from "@/lib/articles";
 
-export default function FeaturedBand() {
+interface Props {
+  articles: ArticleMeta[];
+}
+
+export default function FeaturedBand({ articles }: Props) {
+  const featured = articles.slice(0, 2);
+  if (featured.length === 0) return null;
+
   return (
     <section className="bg-[#160b1d]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
@@ -9,8 +16,8 @@ export default function FeaturedBand() {
           Editor&apos;s Pick
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-0.5">
-          {featuredArticles.map((article) => (
-            <ArticleCard key={article.id} article={article} variant="featured" />
+          {featured.map((article) => (
+            <ArticleCard key={article.slug} article={article} variant="featured" />
           ))}
         </div>
       </div>

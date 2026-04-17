@@ -1,11 +1,11 @@
 import Link from "next/link";
 import ArticleCard from "./ArticleCard";
-import { Article } from "@/lib/mock-data";
+import { ArticleMeta } from "@/lib/articles";
 
 interface Props {
   title: string;
   slug: string;
-  articles: Article[];
+  articles: ArticleMeta[];
 }
 
 export default function CategoryRow({ title, slug, articles }: Props) {
@@ -23,7 +23,7 @@ export default function CategoryRow({ title, slug, articles }: Props) {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {articles.slice(0, 4).map((article) => (
-            <ArticleCard key={article.id} article={article} variant="row" />
+            <ArticleCard key={article.slug} article={article} variant="row" />
           ))}
         </div>
       </div>
