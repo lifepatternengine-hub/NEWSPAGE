@@ -3,6 +3,7 @@ import { DM_Serif_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 const dmSerif = DM_Serif_Display({
   variable: "--font-dm-serif",
@@ -32,6 +33,7 @@ export default function RootLayout({
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
