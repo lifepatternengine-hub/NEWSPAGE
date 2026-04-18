@@ -142,6 +142,9 @@ export interface ApprovedArticle {
   notionId: string;
   slug: string;
   title: string;
+  category: string;
+  date: string;
+  query: string;
 }
 
 export async function getApprovedArticles(): Promise<ApprovedArticle[]> {
@@ -156,6 +159,9 @@ export async function getApprovedArticles(): Promise<ApprovedArticle[]> {
     notionId: page.id,
     slug: page.properties.Slug?.rich_text?.[0]?.text?.content ?? "",
     title: page.properties.Title?.title?.[0]?.text?.content ?? "",
+    category: page.properties.Category?.select?.name ?? "reinvention",
+    date: page.properties.Generated?.date?.start ?? new Date().toISOString().split("T")[0],
+    query: page.properties["SEO Query"]?.rich_text?.[0]?.text?.content ?? "",
   }));
 }
 

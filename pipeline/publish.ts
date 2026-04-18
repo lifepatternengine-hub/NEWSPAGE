@@ -26,35 +26,42 @@ async function run(): Promise<void> {
   for (const article of approved) {
     const filepath = path.join(CONTENT_DIR, `${article.slug}.md`);
 
-    if (!fs.existsSync(filepath)) {
-      console.warn(`  ⚠ File not found: content/articles/${article.slug}.md — skipping`);
-      continue;
-    }
-
-    const existing = fs.readFileSync(filepath, "utf-8");
-    if (!existing.includes("draft: true")) {
-      console.log(`  ℹ Already published: ${article.slug} — marking Posted in Notion`);
-      await markAsPosted(article.notionId);
-      continue;
-    }
-
-    // Read edited content back from Notion
-    console.log(`  ↓ Fetching edited content from Notion...`);
+    console.log(`  ↓ Fetching content from Notion...`);
     const { title, subheadline, body, image } = await getArticleFromNotion(article.notionId);
 
-    // Preserve frontmatter from local file, sync all edited fields, flip draft
-    let updatedFile = existing
-      .replace(/^title:.*$/m, `title: "${title.replace(/"/g, '\\"')}"`)
-      .replace(/^subheadline:.*$/m, `subheadline: "${subheadline.replace(/"/g, '\\"')}"`)
-      .replace("draft: true", "draft: false")
-      .replace(/^# .+\n\n.+\n\n[\s\S]*/m, `# ${title}\n\n${subheadline}\n\n${body}`);
+    if (fs.existsSync(filepath)) {
+      const existing = fs.readFileSync(filepath, "utf-8");
+      if (!existing.includes("draft: true")) {
+        console.log(`  ℹ Already published: ${article.slug} — marking Posted in Notion`);
+        await markAsPosted(article.notionId);
+        continue;
+      }
+      // File exists — preserve frontmatter, sync edited fields
+      let updatedFile = existing
+        .replace(/^title:.*$/m, `title: "${title.replace(/"/g, '\\"')}"`)
+        .replace(/^subheadline:.*$/m, `subheadline: "${subheadline.replace(/"/g, '\\"')}"`)
+        .replace("draft: true", "draft: false")
+        .replace(/^# .+\n\n.+\n\n[\s\S]*/m, `# ${title}\n\n${subheadline}\n\n${body}`);
+      if (image) updatedFile = updatedFile.replace(/^image:.*$/m, `image: "${image}"`);
+      fs.writeFileSync(filepath, updatedFile, "utf-8");
+    } else {
+      // File missing — build from scratch using Notion properties
+      const finalImage = image || `https://picsum.photos/seed/${article.slug}/1200/630`;
+      const frontmatter = `---
+title: "${title.replace(/"/g, '\\"')}"
+subheadline: "${subheadline.replace(/"/g, '\\"')}"
+category: "${article.category}"
+date: "${article.date}"
+image: "${finalImage}"
+query: "${article.query.replace(/"/g, '\\"')}"
+draft: false
+---
 
-    if (image) {
-      updatedFile = updatedFile.replace(/^image:.*$/m, `image: "${image}"`);
+`;
+      fs.writeFileSync(filepath, frontmatter + `# ${title}\n\n${subheadline}\n\n${body}`, "utf-8");
     }
 
-    fs.writeFileSync(filepath, updatedFile, "utf-8");
-    console.log(`  ✓ Updated with Notion edits: content/articles/${article.slug}.md`);
+    console.log(`  ✓ Written: content/articles/${article.slug}.md`);
 
     await markAsPosted(article.notionId);
     console.log(`  ✓ Marked as Posted in Notion`);
