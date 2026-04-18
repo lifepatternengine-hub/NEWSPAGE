@@ -30,12 +30,7 @@ async function run(): Promise<void> {
 
     if (fs.existsSync(filepath)) {
       const existing = fs.readFileSync(filepath, "utf-8");
-      if (!existing.includes("draft: true")) {
-        console.log(`  ℹ Already published: ${article.slug} — marking Posted in Notion`);
-        await markAsPosted(article.notionId);
-        continue;
-      }
-      // File exists — preserve frontmatter, sync edited fields
+      // Always sync edits from Notion when Approved (title, subheadline, image, body)
       let updatedFile = existing
         .replace(/^title:.*$/m, `title: "${title.replace(/"/g, '\\"')}"`)
         .replace(/^subheadline:.*$/m, `subheadline: "${subheadline.replace(/"/g, '\\"')}"`)
