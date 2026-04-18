@@ -83,15 +83,33 @@ function extractTitleAndSub(markdown: string): {
   return { title, subheadline, body };
 }
 
+function getExistingTitles(): string[] {
+  if (!fs.existsSync(CONTENT_DIR)) return [];
+  return fs
+    .readdirSync(CONTENT_DIR)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => {
+      const raw = fs.readFileSync(path.join(CONTENT_DIR, f), "utf-8");
+      const match = raw.match(/^title:\s*"(.+)"/m);
+      return match ? match[1] : f.replace(".md", "");
+    });
+}
+
 async function generateQueries(): Promise<Query[]> {
-  console.log("📋 Generating 60 SEO queries...");
+  const existing = getExistingTitles();
+  const avoidBlock =
+    existing.length > 0
+      ? `\n\nALREADY PUBLISHED — do NOT generate queries that would produce similar articles to these titles:\n${existing.map((t) => `- ${t}`).join("\n")}`
+      : "";
+
+  console.log(`📋 Generating 60 SEO queries (avoiding ${existing.length} existing articles)...`);
 
   const stream = client.messages.stream({
     model: "claude-opus-4-7",
     max_tokens: 4000,
     thinking: { type: "adaptive" },
     system: SYSTEM_PROMPT,
-    messages: [{ role: "user", content: QUERY_GENERATION_PROMPT }],
+    messages: [{ role: "user", content: QUERY_GENERATION_PROMPT + avoidBlock }],
   });
 
   const response = await stream.finalMessage();
