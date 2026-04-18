@@ -2,13 +2,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 import * as fs from "fs";
 import * as path from "path";
-import { execSync } from "child_process";
 import {
   SYSTEM_PROMPT,
   QUERY_GENERATION_PROMPT,
   SCORING_PROMPT,
   ARTICLE_PROMPT,
 } from "./prompts";
+import { saveArticleToNotion } from "./notion";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -39,11 +39,10 @@ function buildFrontmatter(
   title: string,
   subheadline: string,
   category: string,
-  query: string
+  query: string,
+  imageId: number
 ): string {
-  const now = new Date();
-  const date = now.toISOString().split("T")[0];
-  const imageId = Math.floor(Math.random() * 900) + 100;
+  const date = new Date().toISOString().split("T")[0];
 
   return `---
 title: "${title.replace(/"/g, '\\"')}"
@@ -52,7 +51,7 @@ category: "${category}"
 date: "${date}"
 image: "https://picsum.photos/seed/${imageId}/1200/630"
 query: "${query.replace(/"/g, '\\"')}"
-draft: false
+draft: true
 ---
 
 `;
@@ -172,28 +171,34 @@ async function writeArticle(q: Query): Promise<string> {
 async function saveArticle(markdown: string, q: Query): Promise<string> {
   const { title, subheadline, body } = extractTitleAndSub(markdown);
   const slug = slugify(title || q.query);
-  const frontmatter = buildFrontmatter(title, subheadline, q.category, q.query);
-  const full = frontmatter + `# ${title}\n\n${subheadline}\n\n${body}`;
+  const imageId = Math.floor(Math.random() * 900) + 100;
+  const date = new Date().toISOString().split("T")[0];
+  const image = `https://picsum.photos/seed/${imageId}/1200/630`;
 
+  // Save locally as draft: true (hidden from site until approved)
+  const frontmatter = buildFrontmatter(title, subheadline, q.category, q.query, imageId);
+  const full = frontmatter + `# ${title}\n\n${subheadline}\n\n${body}`;
   const filepath = path.join(CONTENT_DIR, `${slug}.md`);
   fs.writeFileSync(filepath, full, "utf-8");
-  console.log(`  ✓ Saved → content/articles/${slug}.md`);
+  console.log(`  ✓ Saved locally (draft) → content/articles/${slug}.md`);
+
+  // Push to Notion for review
+  const notionId = await saveArticleToNotion({
+    title,
+    subheadline,
+    category: q.category,
+    date,
+    image,
+    slug,
+    query: q.query,
+    score: q.score ?? 0,
+    body: `# ${title}\n\n${subheadline}\n\n${body}`,
+  });
+  console.log(`  ✓ Saved to Notion (Draft Ready) → ${notionId}`);
+
   return slug;
 }
 
-function gitCommitAndPush(slugs: string[]): void {
-  console.log("\n🚀 Committing and pushing to GitHub...");
-  try {
-    const files = slugs.map((s) => `content/articles/${s}.md`).join(" ");
-    execSync(`cd ${process.cwd()} && git add ${files}`, { stdio: "inherit" });
-    const msg = `content: add ${slugs.length} AI-generated articles [${new Date().toISOString().split("T")[0]}]`;
-    execSync(`cd ${process.cwd()} && git commit -m "${msg}"`, { stdio: "inherit" });
-    execSync(`cd ${process.cwd()} && git push origin main`, { stdio: "inherit" });
-    console.log("✓ Pushed — Vercel will auto-deploy");
-  } catch (err) {
-    console.error("Git push failed:", err);
-  }
-}
 
 async function run(): Promise<void> {
   console.log("🔄 The Pattern — Article Pipeline\n");
@@ -216,8 +221,8 @@ async function run(): Promise<void> {
     slugs.push(slug);
   }
 
-  console.log(`\n✅ Generated ${slugs.length} articles`);
-  gitCommitAndPush(slugs);
+  console.log(`\n✅ Done — ${slugs.length} articles saved as drafts.`);
+  console.log(`👉 Review and approve in Notion, then run: npm run publish`);
 }
 
 run().catch((err) => {
