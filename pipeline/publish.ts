@@ -54,6 +54,10 @@ async function run(): Promise<void> {
   }
 
   console.log("\n🚀 Committing and pushing to GitHub...");
+  if (process.env.CI) {
+    execSync(`git config user.name "Pipeline Bot"`, { stdio: "inherit" });
+    execSync(`git config user.email "pipeline@the-pattern.xyz"`, { stdio: "inherit" });
+  }
   const files = published.map((s) => `content/articles/${s}.md`).join(" ");
   execSync(`cd ${process.cwd()} && git add ${files}`, { stdio: "inherit" });
   const msg = `content: publish ${published.length} approved article(s) [${new Date().toISOString().split("T")[0]}]`;
