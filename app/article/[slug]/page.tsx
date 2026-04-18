@@ -85,7 +85,7 @@ export default async function ArticlePage({
       </div>
 
       {/* Hero image */}
-      <div className="relative w-full aspect-[21/9] max-h-[480px] overflow-hidden">
+      <div className="relative w-full min-h-[220px] aspect-[16/9] md:aspect-[21/9] max-h-[480px] overflow-hidden">
         <Image
           src={article.image}
           alt={article.title}
