@@ -5,7 +5,7 @@ category: "burnout"
 date: "2026-04-18"
 image: "https://picsum.photos/seed/419/1200/630"
 query: "functional freeze high performing professional symptoms"
-draft: true
+draft: false
 ---
 
 # The High Performer's Paradox: Why You're Paralyzed Despite Outward Productivity
