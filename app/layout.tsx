@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Honest, evidence-based journalism for professionals navigating the second half of their working lives. Mental health, career transition, identity, and purpose.",
   metadataBase: new URL("https://the-pattern.xyz"),
-  verification: { google: "google5b3d20fd8ce021dd" },
+  verification: { google: "ljvh2zOheaJ2nLCOlCXZCXSLeitBSnvFT6MeJyPAEu8" },
   openGraph: {
     siteName: "The Pattern",
     type: "website",
