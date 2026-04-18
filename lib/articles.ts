@@ -73,8 +73,18 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
 
-  // Strip leading H1 (and the subheadline paragraph that follows) — rendered from frontmatter
-  const body = content.replace(/^#\s+.+\n+[^\n#]+\n+/, "").trimStart();
+  // Strip leading H1 and subheadline paragraph — both rendered from frontmatter
+  const lines = content.trimStart().split("\n");
+  let start = 0;
+  if (lines[start]?.startsWith("# ")) {
+    start++; // skip H1
+    while (start < lines.length && lines[start].trim() === "") start++; // skip blank lines
+    if (start < lines.length && !lines[start].startsWith("#")) {
+      start++; // skip subheadline paragraph
+      while (start < lines.length && lines[start].trim() === "") start++; // skip blank lines
+    }
+  }
+  const body = lines.slice(start).join("\n");
 
   const processed = await remark().use(remarkHtml).process(body);
   const contentHtml = processed.toString();
