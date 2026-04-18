@@ -73,7 +73,10 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
 
-  const processed = await remark().use(remarkHtml).process(content);
+  // Strip leading H1 (and the subheadline paragraph that follows) — rendered from frontmatter
+  const body = content.replace(/^#\s+.+\n+[^\n#]+\n+/, "").trimStart();
+
+  const processed = await remark().use(remarkHtml).process(body);
   const contentHtml = processed.toString();
 
   return {
@@ -84,7 +87,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     date: data.date ?? "",
     image: data.image ?? `https://picsum.photos/seed/${slug}/1200/630`,
     draft: data.draft ?? false,
-    readingTime: calcReadingTime(content),
+    readingTime: calcReadingTime(body),
     contentHtml,
   };
 }
