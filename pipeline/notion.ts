@@ -152,10 +152,11 @@ export async function getApprovedArticles(): Promise<ApprovedArticle[]> {
 
   const res = await notion.dataSources.query({
     data_source_id: DATA_SOURCE_ID,
-    filter: { property: "Status", select: { equals: "Approved" }, type: "select" } as any,
   });
 
-  return res.results.map((page: any) => ({
+  return res.results
+    .filter((page: any) => page.properties?.Status?.select?.name === "Approved")
+    .map((page: any) => ({
     notionId: page.id,
     slug: page.properties.Slug?.rich_text?.[0]?.text?.content ?? "",
     title: page.properties.Title?.title?.[0]?.text?.content ?? "",
