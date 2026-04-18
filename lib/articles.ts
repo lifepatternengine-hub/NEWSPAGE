@@ -52,7 +52,7 @@ export function getAllArticles(): ArticleMeta[] {
         subheadline: data.subheadline ?? "",
         category: data.category ?? "uncategorized",
         date: data.date ?? "",
-        image: data.image ?? `https://picsum.photos/seed/${slug}/1200/630`,
+        image: data.image ?? `/images/article-default.png`,
         draft: data.draft ?? false,
         readingTime: calcReadingTime(content),
       } as ArticleMeta;
@@ -82,7 +82,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     subheadline: data.subheadline ?? "",
     category: data.category ?? "uncategorized",
     date: data.date ?? "",
-    image: data.image ?? `https://picsum.photos/seed/${slug}/1200/630`,
+    image: data.image ?? `/images/article-default.png`,
     draft: data.draft ?? false,
     readingTime: calcReadingTime(content),
     contentHtml,
