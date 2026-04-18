@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { getArticleBySlug, getAllArticleSlugs } from "@/lib/articles";
 
@@ -85,13 +84,12 @@ export default async function ArticlePage({
       </div>
 
       {/* Hero image */}
-      <div className="relative w-full min-h-[220px] aspect-[16/9] md:aspect-[21/9] max-h-[480px] overflow-hidden">
-        <Image
+      <div className="w-full h-[220px] md:h-[420px] overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={article.image}
           alt={article.title}
-          fill
-          className="object-cover"
-          priority
+          className="w-full h-full object-cover"
         />
       </div>
 
