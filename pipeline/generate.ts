@@ -39,7 +39,8 @@ function buildFrontmatter(
   title: string,
   subheadline: string,
   category: string,
-  query: string
+  query: string,
+  imageId: number
 ): string {
   const date = new Date().toISOString().split("T")[0];
 
@@ -48,7 +49,7 @@ title: "${title.replace(/"/g, '\\"')}"
 subheadline: "${subheadline.replace(/"/g, '\\"')}"
 category: "${category}"
 date: "${date}"
-image: "/images/article-default.png"
+image: "https://picsum.photos/seed/${imageId}/1200/630"
 query: "${query.replace(/"/g, '\\"')}"
 draft: true
 ---
@@ -189,10 +190,11 @@ async function saveArticle(markdown: string, q: Query): Promise<string> {
   const { title, subheadline, body } = extractTitleAndSub(markdown);
   const slug = slugify(title || q.query);
   const date = new Date().toISOString().split("T")[0];
-  const image = "/images/article-default.png";
+  const imageId = Math.floor(Math.random() * 900) + 100;
+  const image = `https://picsum.photos/seed/${imageId}/1200/630`;
 
   // Save locally as draft: true (hidden from site until approved)
-  const frontmatter = buildFrontmatter(title, subheadline, q.category, q.query);
+  const frontmatter = buildFrontmatter(title, subheadline, q.category, q.query, imageId);
   const full = frontmatter + `# ${title}\n\n${subheadline}\n\n${body}`;
   const filepath = path.join(CONTENT_DIR, `${slug}.md`);
   fs.writeFileSync(filepath, full, "utf-8");

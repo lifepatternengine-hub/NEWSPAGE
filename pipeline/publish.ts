@@ -46,7 +46,7 @@ async function run(): Promise<void> {
       fs.writeFileSync(filepath, updatedFile, "utf-8");
     } else {
       // File missing — build from scratch using Notion properties
-      const finalImage = image || "/images/article-default.png";
+      const finalImage = image || `https://picsum.photos/seed/${article.slug}/1200/630`;
       const frontmatter = `---
 title: "${title.replace(/"/g, '\\"')}"
 subheadline: "${subheadline.replace(/"/g, '\\"')}"
