@@ -3,9 +3,9 @@ title: "The High Performer's Paradox: Why You're Paralyzed Despite Outward Produ
 subheadline: "**A growing body of research identifies \"functional freeze\" as a distinct nervous system state that allows senior professionals to execute flawlessly by day while collapsing internally — and it's frequently misdiagnosed as burnout or depression.**"
 category: "burnout"
 date: "2026-04-18"
-image: "https://picsum.photos/seed/419/1200/630"
+image: "https://prod-files-secure.s3.us-west-2.amazonaws.com/715a21b2-a01b-810b-b443-0003d05e4d6f/e4598803-9299-4497-9ff5-3f15fc65f045/first_one.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4662ZOOTCBV%2F20260418%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260418T103134Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjECIaCXVzLXdlc3QtMiJGMEQCIEixnV3qyjDwSyiBV%2BUZo7zCub4tb1OqPMAXflgG1QclAiB0L15kR7t9WNkYBJ8grj0pje7Z3nVUa7drBwder4XTAiqIBAjr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIM74avFPTbFHWvva4lKtwDvht9awc5Evgl5DCn0Ru95y1lHuzSt%2BQZttG1c2oY717hzuYBKI5B%2Be7fvPRb92W6M5PpEUZ9Ac19O7CD7C8Y%2FtUE8WrDTaeKpFDnfEFyP4md225s8ZjkYuwz3SWwuNB1JvzA0DTp%2B8vBOh56vi0DNFc84z979jh6z%2BBmZhqbHb%2FyOqvWWvgcILN84YlIw0ed%2BNQ7XagCJ5WyYUV2ZXKnwumHb5Hw2pPjUlLB8HV7hxkoPsDkHK7zynEkv4ooSXp86QP97Ga80bifU5e71%2BkWTzkUq4GPFMv9XnE3AyTXp8h3YNyslLI3MUuR3GHApKVQtQ1kTEwkSJlpNCqxDHDxsmBSEUfkIDBBRY1HNmP968bahko4mjSuhQhJkYvkDoWt0n0S%2FSq70C2Y6TBCD%2Fo4l6W9OkK3vDVxZb%2BHv8cbB%2FjYAWhPf0lON7UxRtRtSo9YaY7F6gbVnaZBhY03ybtF0CUerlaOHv75BNuu5SxkpiEh91z30Yyem%2FucclNAfRVoJJuyKYbUvwlXKvGdJYqP5ft6dj7gmDSUkPEICX0CE162o02T6qWRKrrKbQOM6f2G5Crx1EhApu35d%2BNfI4MaMcYzcNRbULNCY03PXbH9c%2BNF3P3Olb0wyPsumMswsaKNzwY6pgFKs08BLLN1YNCqfgO%2FRpPgJnT2P0wJckiaRoeCSPOk1abaFWzB2rTOAFZobQLIP7pTf1jZH9p31lLJL4AdkQsZXCzfthy8dyTV0LGNuJFKnMfWd%2BcoXrQexFv%2BqKGcDg%2BUOensy1RnV%2BtIJXbi%2FK0%2FZSZTzIQs5CsL682yQG42ktxeAcxVFkOConUQv01oiCRcCeeKNjqnYCHRpPQf4b3cLybvXSEI&X-Amz-Signature=1f3d41a66e1e40f65179a26f7568b50a593cc5bb4f61aedc645464288ee9351e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
 query: "functional freeze high performing professional symptoms"
-draft: true
+draft: false
 ---
 
 # The High Performer's Paradox: Why You're Paralyzed Despite Outward Productivity
