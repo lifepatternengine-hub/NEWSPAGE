@@ -1,60 +1,65 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F0EDE6;
-  --foreground: #1A1A1A;
+  --background: #1a1510;
+  --foreground: #f0ece4;
+  --bg-card: #221d17;
+  --accent: #a885d4;
+  --border-color: #2e2a24;
+  --ink-mid: #9b9286;
+  --ink-soft: #6b6460;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-dm-serif);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
 
 /* Article body prose */
 .prose-article {
-  color: #2a1f1f;
+  color: #9b9286;
   font-size: 1.0625rem;
   line-height: 1.8;
 }
 .prose-article h1 {
-  font-family: var(--font-dm-serif);
+  font-family: var(--font-serif);
   font-size: 2.25rem;
   line-height: 1.2;
   margin: 2rem 0 0.5rem;
-  color: #160b1d;
+  color: #f0ece4;
 }
 .prose-article h2 {
-  font-family: var(--font-dm-serif);
+  font-family: var(--font-serif);
   font-size: 1.5rem;
   line-height: 1.3;
   margin: 2.5rem 0 0.75rem;
-  color: #160b1d;
+  color: #f0ece4;
 }
 .prose-article h3 {
   font-size: 1.1rem;
   font-weight: 600;
   margin: 2rem 0 0.5rem;
-  color: #160b1d;
+  color: #f0ece4;
 }
 .prose-article p {
   margin: 0 0 1.5rem;
 }
 .prose-article blockquote {
-  border-left: 3px solid #C8512A;
+  border-left: 3px solid #a885d4;
   margin: 2rem 0;
   padding: 0.5rem 0 0.5rem 1.5rem;
-  font-family: var(--font-dm-serif);
+  font-family: var(--font-serif);
   font-size: 1.2rem;
   line-height: 1.5;
-  color: #160b1d;
+  color: #f0ece4;
 }
 .prose-article blockquote p {
   margin: 0;
@@ -67,11 +72,11 @@ body {
   margin-bottom: 0.4rem;
 }
 .prose-article a {
-  color: #C8512A;
+  color: #a885d4;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .prose-article strong {
   font-weight: 600;
-  color: #160b1d;
+  color: #f0ece4;
 }

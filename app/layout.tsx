@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Inter } from "next/font/google";
+import { Instrument_Serif, DM_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
-const dmSerif = DM_Serif_Display({
-  variable: "--font-dm-serif",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-serif",
   subsets: ["latin"],
   weight: "400",
+  style: ["normal", "italic"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const dmSans = DM_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -41,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSerif.variable} ${inter.variable}`}>
+    <html lang="en" className={`${instrumentSerif.variable} ${dmSans.variable}`}>
       <head>
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-66YK7DMK53" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">{`

@@ -1,28 +1,42 @@
 export default function LPEBand() {
   return (
-    <section className="bg-[#0e0a17] text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-20 text-center">
-        <p className="text-[10px] tracking-[0.25em] uppercase text-white/40 mb-5">
-          Life Pattern Engine
-        </p>
-        <h2 className="font-serif text-3xl md:text-4xl lg:text-[2.75rem] max-w-2xl mx-auto leading-tight">
-          Which of the 15 patterns are you carrying?
-        </h2>
-        <p className="mt-5 text-white/65 max-w-lg mx-auto text-[0.95rem] leading-relaxed">
-          28 questions. 15 professional archetypes. Understand your dominant pattern — free.
-          Built for high-achieving professionals navigating the second half of their working lives.
-        </p>
-        <a
-          href="https://life-pattern-engine.xyz"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-8 inline-block bg-white text-[#0e0e0e] px-8 py-3.5 text-xs tracking-widest uppercase font-medium hover:bg-white/90 transition-colors"
-        >
-          Take the Free Diagnostic →
-        </a>
-        <p className="mt-3 text-[11px] text-white/30">
-          No email required. Takes 7 minutes.
-        </p>
+    <section className="bg-[#1a1510]">
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="bg-[#1e1530] border border-[#3a2a5c] rounded-2xl p-12 md:p-14 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-center relative overflow-hidden">
+          {/* Decorative large number */}
+          <div className="absolute right-40 top-[-20px] font-serif text-[200px] italic text-white/[0.04] pointer-events-none leading-none select-none">
+            15
+          </div>
+
+          {/* Left content */}
+          <div className="relative">
+            <p className="text-[10px] tracking-[0.25em] uppercase text-[#a885d4] mb-5">
+              Life Pattern Engine
+            </p>
+            <h2 className="font-serif text-2xl md:text-3xl text-[#f0ece4] leading-tight">
+              Which of the 15 patterns are you carrying?
+            </h2>
+            <p className="text-[#9b9286] text-sm leading-relaxed mt-3 max-w-lg">
+              28 questions. 15 professional archetypes. Understand your dominant pattern — free.
+              Built for high-achieving professionals navigating the second half of their working lives.
+            </p>
+            <p className="text-[#6b6460] text-xs mt-2">
+              No email required. Takes 7 minutes.
+            </p>
+          </div>
+
+          {/* Right CTA */}
+          <div className="relative shrink-0">
+            <a
+              href="https://life-pattern-engine.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#a885d4] text-[#1a1510] rounded-full px-7 py-3.5 font-medium text-sm whitespace-nowrap hover:bg-[#bc9ee0] transition-colors inline-block"
+            >
+              Take the Free Diagnostic →
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
