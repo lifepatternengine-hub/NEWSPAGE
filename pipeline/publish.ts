@@ -1,7 +1,6 @@
 #!/usr/bin/env tsx
 import * as fs from "fs";
 import * as path from "path";
-import { execSync } from "child_process";
 import { getApprovedArticles, getArticleFromNotion, markAsPosted } from "./notion";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "articles");
@@ -74,18 +73,7 @@ draft: false
     return;
   }
 
-  console.log("\n🚀 Committing and pushing to GitHub...");
-  if (process.env.CI) {
-    execSync(`git config user.name "Pipeline Bot"`, { stdio: "inherit" });
-    execSync(`git config user.email "pipeline@the-pattern.xyz"`, { stdio: "inherit" });
-  }
-  const files = published.map((s) => `content/articles/${s}.md`).join(" ");
-  execSync(`cd ${process.cwd()} && git add ${files}`, { stdio: "inherit" });
-  const msg = `content: publish ${published.length} approved article(s) [${new Date().toISOString().split("T")[0]}]`;
-  execSync(`cd ${process.cwd()} && git commit -m "${msg}"`, { stdio: "inherit" });
-  execSync(`cd ${process.cwd()} && git push origin main`, { stdio: "inherit" });
-
-  console.log(`\n✅ Published ${published.length} article(s) — Vercel auto-deploying.`);
+  console.log(`\n✅ Written ${published.length} article(s) — workflow will commit and push.`);
 }
 
 run().catch((err) => {
