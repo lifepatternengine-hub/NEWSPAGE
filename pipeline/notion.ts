@@ -79,6 +79,59 @@ export async function saveArticleToNotion(article: NotionArticle): Promise<strin
   return page.id;
 }
 
+function blockToMarkdown(block: any): string {
+  const text = (richText: any[]) =>
+    (richText ?? []).map((t: any) => t.text?.content ?? "").join("");
+
+  switch (block.type) {
+    case "heading_1": return `# ${text(block.heading_1.rich_text)}`;
+    case "heading_2": return `## ${text(block.heading_2.rich_text)}`;
+    case "heading_3": return `### ${text(block.heading_3.rich_text)}`;
+    case "quote":     return `> ${text(block.quote.rich_text)}`;
+    case "paragraph": return text(block.paragraph.rich_text);
+    default:          return "";
+  }
+}
+
+export interface ArticleContent {
+  title: string;
+  subheadline: string;
+  body: string;
+}
+
+export async function getArticleFromNotion(notionId: string): Promise<ArticleContent> {
+  const notion = client();
+
+  const [page, blocksRes] = await Promise.all([
+    notion.pages.retrieve({ page_id: notionId }),
+    notion.blocks.children.list({ block_id: notionId, page_size: 100 }),
+  ]);
+
+  const title =
+    (page as any).properties?.Title?.title?.[0]?.text?.content ?? "";
+
+  // Page structure: [subheadline paragraph] [divider] [article blocks...]
+  const blocks = blocksRes.results as any[];
+  let subheadline = "";
+  const bodyLines: string[] = [];
+  let pastDivider = false;
+
+  for (const block of blocks) {
+    if (!pastDivider) {
+      if (block.type === "divider") { pastDivider = true; continue; }
+      if (block.type === "paragraph") {
+        subheadline = (block.paragraph.rich_text ?? [])
+          .map((t: any) => t.text?.content ?? "").join("");
+      }
+      continue;
+    }
+    const line = blockToMarkdown(block);
+    if (line) bodyLines.push(line);
+  }
+
+  return { title, subheadline, body: bodyLines.join("\n\n") };
+}
+
 export interface ApprovedArticle {
   notionId: string;
   slug: string;

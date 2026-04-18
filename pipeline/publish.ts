@@ -2,7 +2,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { execSync } from "child_process";
-import { getApprovedArticles, markAsPosted } from "./notion";
+import { getApprovedArticles, getArticleFromNotion, markAsPosted } from "./notion";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "articles");
 
@@ -31,16 +31,26 @@ async function run(): Promise<void> {
       continue;
     }
 
-    const content = fs.readFileSync(filepath, "utf-8");
-    if (!content.includes("draft: true")) {
+    const existing = fs.readFileSync(filepath, "utf-8");
+    if (!existing.includes("draft: true")) {
       console.log(`  ℹ Already published: ${article.slug} — marking Posted in Notion`);
       await markAsPosted(article.notionId);
       continue;
     }
 
-    const updated = content.replace("draft: true", "draft: false");
-    fs.writeFileSync(filepath, updated, "utf-8");
-    console.log(`  ✓ Enabled: content/articles/${article.slug}.md`);
+    // Read edited content back from Notion
+    console.log(`  ↓ Fetching edited content from Notion...`);
+    const { title, subheadline, body } = await getArticleFromNotion(article.notionId);
+
+    // Preserve frontmatter from local file, update title/subheadline, flip draft
+    const updatedFile = existing
+      .replace(/^title:.*$/m, `title: "${title.replace(/"/g, '\\"')}"`)
+      .replace(/^subheadline:.*$/m, `subheadline: "${subheadline.replace(/"/g, '\\"')}"`)
+      .replace("draft: true", "draft: false")
+      .replace(/^# .+\n\n.+\n\n[\s\S]*/m, `# ${title}\n\n${subheadline}\n\n${body}`);
+
+    fs.writeFileSync(filepath, updatedFile, "utf-8");
+    console.log(`  ✓ Updated with Notion edits: content/articles/${article.slug}.md`);
 
     await markAsPosted(article.notionId);
     console.log(`  ✓ Marked as Posted in Notion`);
