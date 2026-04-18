@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -41,7 +42,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dmSerif.variable} ${inter.variable}`}>
-<body className="min-h-screen flex flex-col antialiased">
+      <head>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-66YK7DMK53" strategy="afterInteractive" />
+        <Script id="gtag-init" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-66YK7DMK53');
+        `}</Script>
+      </head>
+      <body className="min-h-screen flex flex-col antialiased">
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
