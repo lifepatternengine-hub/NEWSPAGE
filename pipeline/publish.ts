@@ -40,14 +40,18 @@ async function run(): Promise<void> {
 
     // Read edited content back from Notion
     console.log(`  ↓ Fetching edited content from Notion...`);
-    const { title, subheadline, body } = await getArticleFromNotion(article.notionId);
+    const { title, subheadline, body, image } = await getArticleFromNotion(article.notionId);
 
-    // Preserve frontmatter from local file, update title/subheadline, flip draft
-    const updatedFile = existing
+    // Preserve frontmatter from local file, sync all edited fields, flip draft
+    let updatedFile = existing
       .replace(/^title:.*$/m, `title: "${title.replace(/"/g, '\\"')}"`)
       .replace(/^subheadline:.*$/m, `subheadline: "${subheadline.replace(/"/g, '\\"')}"`)
       .replace("draft: true", "draft: false")
       .replace(/^# .+\n\n.+\n\n[\s\S]*/m, `# ${title}\n\n${subheadline}\n\n${body}`);
+
+    if (image) {
+      updatedFile = updatedFile.replace(/^image:.*$/m, `image: "${image}"`);
+    }
 
     fs.writeFileSync(filepath, updatedFile, "utf-8");
     console.log(`  ✓ Updated with Notion edits: content/articles/${article.slug}.md`);

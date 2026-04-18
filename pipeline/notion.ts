@@ -97,6 +97,7 @@ export interface ArticleContent {
   title: string;
   subheadline: string;
   body: string;
+  image: string;
 }
 
 export async function getArticleFromNotion(notionId: string): Promise<ArticleContent> {
@@ -109,6 +110,11 @@ export async function getArticleFromNotion(notionId: string): Promise<ArticleCon
 
   const title =
     (page as any).properties?.Title?.title?.[0]?.text?.content ?? "";
+
+  const cover = (page as any).cover;
+  const image =
+    cover?.type === "external" ? cover.external.url :
+    cover?.type === "file"     ? cover.file.url : "";
 
   // Page structure: [subheadline paragraph] [divider] [article blocks...]
   const blocks = blocksRes.results as any[];
@@ -129,7 +135,7 @@ export async function getArticleFromNotion(notionId: string): Promise<ArticleCon
     if (line) bodyLines.push(line);
   }
 
-  return { title, subheadline, body: bodyLines.join("\n\n") };
+  return { title, subheadline, body: bodyLines.join("\n\n"), image };
 }
 
 export interface ApprovedArticle {
