@@ -61,23 +61,23 @@ export default async function ArticlePage({
   });
 
   return (
-    <main className="bg-[#F0EDE6] min-h-screen">
+    <main className="bg-[var(--bg)] min-h-screen">
       {/* Header */}
-      <div className="border-b border-[#E2DDD5]">
+      <div className="border-b border-[var(--border)]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-8">
           <Link
             href={`/category/${article.category}`}
-            className="text-[10px] tracking-widest uppercase text-[#C8512A] font-medium hover:opacity-75 transition-opacity"
+            className="text-[10px] tracking-widest uppercase text-[var(--accent)] font-medium hover:opacity-75 transition-opacity"
           >
             {label}
           </Link>
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight mt-4 mb-4 text-[#160b1d]">
+          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight mt-4 mb-4 text-[var(--ink)]">
             {article.title}
           </h1>
-          <p className="text-lg text-[#5a5050] leading-relaxed mb-6">
+          <p className="text-lg text-[var(--ink-mid)] leading-relaxed mb-6">
             {article.subheadline}
           </p>
-          <p className="text-xs text-[#9a8e8e] tracking-wide">
+          <p className="text-xs text-[var(--ink-soft)] tracking-wide">
             {formattedDate} · {article.readingTime} min read
           </p>
         </div>
@@ -101,15 +101,15 @@ export default async function ArticlePage({
         />
 
         {/* LPE CTA */}
-        <div className="mt-16 border-t border-[#E2DDD5] pt-12">
-          <div className="bg-[#0e0a17] text-white px-8 py-10 text-center">
-            <p className="text-[10px] tracking-[0.25em] uppercase text-white/40 mb-3">
+        <div className="mt-16 border-t border-[var(--border)] pt-12">
+          <div className="bg-[var(--lpe-bg)] border border-[var(--lpe-border)] rounded-2xl px-8 py-10 text-center">
+            <p className="text-[10px] tracking-[0.25em] uppercase text-[var(--accent)] mb-3">
               Life Pattern Engine
             </p>
-            <h2 className="font-serif text-2xl md:text-3xl mb-4">
+            <h2 className="font-serif text-2xl md:text-3xl mb-4 text-[var(--ink)]">
               Which of the 15 patterns are you carrying?
             </h2>
-            <p className="text-white/60 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
+            <p className="text-[var(--ink-mid)] text-sm mb-6 max-w-sm mx-auto leading-relaxed">
               28 questions. Free. Built for high-achieving professionals
               navigating the second half of their working lives.
             </p>
@@ -117,11 +117,11 @@ export default async function ArticlePage({
               href="https://life-pattern-engine.xyz"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-white text-[#0e0a17] px-8 py-3 text-xs tracking-widest uppercase font-medium hover:bg-white/90 transition-colors"
+              className="inline-block bg-[var(--accent)] text-[var(--bg)] rounded-full px-8 py-3 text-xs tracking-widest uppercase font-medium hover:opacity-90 transition-opacity"
             >
               Take the Free Diagnostic →
             </a>
-            <p className="mt-3 text-[11px] text-white/30">No email required. Takes 7 minutes.</p>
+            <p className="mt-3 text-[11px] text-[var(--ink-soft)]">No email required. Takes 7 minutes.</p>
           </div>
         </div>
       </div>
