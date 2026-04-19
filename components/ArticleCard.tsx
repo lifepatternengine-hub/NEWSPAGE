@@ -25,7 +25,7 @@ export default function ArticleCard({ article, variant = "row" }: Props) {
 
   if (variant === "featured") {
     return (
-      <Link href={`/article/${article.slug}`} className="group relative block overflow-hidden rounded-2xl bg-[#221d17] border border-[#2e2a24]">
+      <Link href={`/article/${article.slug}`} className="group relative block overflow-hidden rounded-2xl bg-[var(--bg-card)] border border-[var(--border)]">
         <div className="relative aspect-[16/9]">
           <Image
             src={article.image}
@@ -36,7 +36,7 @@ export default function ArticleCard({ article, variant = "row" }: Props) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-          <span className="inline-block text-[10px] tracking-widest uppercase text-[#a885d4] mb-2">
+          <span className="inline-block text-[10px] tracking-widest uppercase text-[var(--accent)] mb-2">
             {categoryLabel}
           </span>
           <h2 className="font-serif text-2xl lg:text-3xl text-white leading-tight">
@@ -55,7 +55,7 @@ export default function ArticleCard({ article, variant = "row" }: Props) {
 
   if (variant === "hero") {
     return (
-      <Link href={`/article/${article.slug}`} className="group block bg-[#221d17] border border-[#2e2a24] rounded-2xl overflow-hidden">
+      <Link href={`/article/${article.slug}`} className="group block bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl overflow-hidden">
         <div className="relative aspect-[3/2] overflow-hidden">
           <Image
             src={article.image}
@@ -65,20 +65,20 @@ export default function ArticleCard({ article, variant = "row" }: Props) {
           />
         </div>
         <div className="p-4">
-          <span className="text-[10px] tracking-widest uppercase text-[#a885d4]">
+          <span className="text-[10px] tracking-widest uppercase text-[var(--accent)]">
             {categoryLabel}
           </span>
-          <h3 className="mt-1 font-serif text-[0.95rem] leading-snug text-[#f0ece4] group-hover:text-[#a885d4] transition-colors line-clamp-3">
+          <h3 className="mt-1 font-serif text-[0.95rem] leading-snug text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors line-clamp-3">
             {article.title}
           </h3>
-          <div className="mt-1.5 text-[11px] text-[#6b6460]">{formattedDate}</div>
+          <div className="mt-1.5 text-[11px] text-[var(--ink-soft)]">{formattedDate}</div>
         </div>
       </Link>
     );
   }
 
   return (
-    <Link href={`/article/${article.slug}`} className="group block bg-[#221d17] border border-[#2e2a24] rounded-2xl overflow-hidden">
+    <Link href={`/article/${article.slug}`} className="group block bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl overflow-hidden">
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
           src={article.image}
@@ -88,13 +88,13 @@ export default function ArticleCard({ article, variant = "row" }: Props) {
         />
       </div>
       <div className="p-4">
-        <span className="text-[10px] tracking-widest uppercase text-[#a885d4]">
+        <span className="text-[10px] tracking-widest uppercase text-[var(--accent)]">
           {categoryLabel}
         </span>
-        <h3 className="mt-1 font-serif text-[1rem] leading-snug text-[#f0ece4] group-hover:text-[#a885d4] transition-colors line-clamp-3">
+        <h3 className="mt-1 font-serif text-[1rem] leading-snug text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors line-clamp-3">
           {article.title}
         </h3>
-        <div className="mt-1.5 text-[11px] text-[#6b6460]">
+        <div className="mt-1.5 text-[11px] text-[var(--ink-soft)]">
           {formattedDate} · {article.readingTime} min read
         </div>
       </div>

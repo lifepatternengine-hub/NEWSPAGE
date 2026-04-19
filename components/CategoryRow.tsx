@@ -10,13 +10,13 @@ interface Props {
 
 export default function CategoryRow({ title, slug, articles }: Props) {
   return (
-    <section className="bg-[#1a1510] border-t border-[#2e2a24]">
+    <section className="bg-[var(--bg)] border-t border-[var(--border)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         <div className="flex items-baseline justify-between mb-7">
-          <h2 className="font-serif text-2xl text-[#f0ece4]">{title}</h2>
+          <h2 className="font-serif text-2xl text-[var(--ink)]">{title}</h2>
           <Link
             href={`/category/${slug}`}
-            className="text-[#a885d4] text-xs font-medium hover:text-[#bc9ee0] transition-colors"
+            className="text-[var(--accent)] text-xs font-medium hover:text-[var(--accent)] transition-colors"
           >
             See all →
           </Link>
