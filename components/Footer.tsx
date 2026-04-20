@@ -1,7 +1,33 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  async function handleSubscribe(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) return;
+    setStatus("loading");
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "footer" }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Something went wrong.");
+      setStatus("success");
+      setEmail("");
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
+    }
+  }
+
   return (
     <footer className="bg-[var(--bg)] border-t border-[var(--border)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
@@ -51,19 +77,36 @@ export default function Footer() {
               Weekly Digest
             </h3>
             <p className="text-sm text-[var(--ink-mid)] mb-4">The signal, not the noise.</p>
-            <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 bg-[var(--bg-card)] border border-[var(--border)] rounded-full px-4 py-2 text-sm text-[var(--ink)] placeholder-[var(--ink-soft)] focus:outline-none focus:border-[var(--accent)] transition-colors"
-              />
-              <button
-                type="submit"
-                className="bg-[var(--ink)] text-[var(--bg)] rounded-full px-4 py-2 text-xs font-medium hover:bg-[var(--accent)] hover:text-white transition-colors shrink-0"
-              >
-                Join
-              </button>
-            </form>
+
+            {status === "success" ? (
+              <div className="flex items-center gap-2 text-sm text-[var(--accent)] bg-[var(--bg-card)] border border-[var(--border)] rounded-full px-4 py-2.5">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Check your inbox!</span>
+              </div>
+            ) : (
+              <form className="flex gap-2" onSubmit={handleSubscribe}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  required
+                  disabled={status === "loading"}
+                  className="flex-1 bg-[var(--bg-card)] border border-[var(--border)] rounded-full px-4 py-2 text-sm text-[var(--ink)] placeholder-[var(--ink-soft)] focus:outline-none focus:border-[var(--accent)] transition-colors disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="bg-[var(--ink)] text-[var(--bg)] rounded-full px-4 py-2 text-xs font-medium hover:bg-[var(--accent)] hover:text-white transition-colors shrink-0 disabled:opacity-50"
+                >
+                  {status === "loading" ? "…" : "Join"}
+                </button>
+              </form>
+            )}
+
+            {status === "error" && (
+              <p className="mt-2 text-xs text-red-400">{errorMsg}</p>
+            )}
           </div>
         </div>
 
