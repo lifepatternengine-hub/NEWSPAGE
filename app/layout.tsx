@@ -21,7 +21,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "The Pattern — Midlife Professional Reinvention",
   description:
-    "Honest, evidence-based journalism for professionals navigating the second half of their working lives. Mental health, career transition, identity, and purpose.",
+    "Journalism to Journaling — honest writing for professionals navigating midlife reinvention.",
   metadataBase: new URL("https://the-pattern.xyz"),
   verification: { google: "ljvh2zOheaJ2nLCOlCXZCXSLeitBSnvFT6MeJyPAEu8" },
   openGraph: {
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     url: "https://the-pattern.xyz",
     title: "The Pattern — Midlife Professional Reinvention",
     description:
-      "Honest, evidence-based journalism for professionals navigating the second half of their working lives.",
+      "Journalism to Journaling — honest writing for professionals navigating midlife reinvention.",
   },
   twitter: {
     card: "summary_large_image",
@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${instrumentSerif.variable} ${dmSans.variable}`}>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()` }} />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark')}}catch(e){}})()` }} />
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-66YK7DMK53" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];

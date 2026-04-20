@@ -11,8 +11,7 @@ export default function Footer() {
               The <em className="italic text-[var(--accent)]">Pattern</em>
             </h2>
             <p className="text-sm text-[var(--ink-mid)] leading-relaxed max-w-xs">
-              Honest, evidence-based journalism for professionals navigating the second half
-              of their working lives. Neither doom nor cheerleading — just the full arc.
+              Journalism to Journaling
             </p>
           </div>
 
